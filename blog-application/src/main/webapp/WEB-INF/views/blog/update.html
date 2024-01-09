@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>UpdateBlog</title>
+</head>
+<body>
+<h3>Update Blog</h3>
+<p>
+    <a th:href="@{/blogs}">
+        Back to blog list
+    </a>
+</p>
+<div id="form">
+    <form action="#" th:action="@{/blogs/update}" th:object="${blog}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label for="name">Title</label>
+            <input type="text" id="name" th:field="*{title}"/>
+        </div>
+        <div>
+            <label for="email">Content</label>
+            <input type="email" id="email" th:field="*{content}"/>
+        </div>
+        <div>
+            <label for="address">Author</label>
+            <input type="text" id="address" th:field="*{author}"/>
+        </div>
+        <input type="submit" value="Edit"/>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

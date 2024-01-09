@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>ListBlog</title>
+</head>
+<body>
+<h3>Blogs</h3>
+<p>
+    <a th:href="@{/blogs/create}">
+        Add new blog
+    </a>
+</p>
+<div th:each="catalog : ${catalogs}">
+    <a th:href="@{/blogs/{catalogId}(catalogId = ${catalog.id})}" th:text="${catalog.name}"/>
+</div>
+<div style="margin-bottom: 10px; margin-left: 110px;">
+    <form th:action="@{/blogs/search}" method="get">
+        <label for="search">Search</label>
+        <input type="text" name="search" id="search">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+
+<table id = "customers">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Author</th>
+        <th>Catalog</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${blogs}">
+        <td th:text="${row.title}"></td>
+        <td th:text="${row.content}"></td>
+        <td th:text="${row.author}"></td>
+        <td th:text="${row.catalog.name}"></td>
+        <td><a th:href="@{/blogs/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/blogs/{id}/delete(id=${row.getId()})}">delete</a></td>
+        <td><a th:href="@{/blogs/{id}/view(id=${row.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<a class="btn btn-primary" th:if="${blogs.hasPrevious()}"
+   th:href="@{/blogs/page(page=${blogs.number - 1})}" th:object="${blogs}">Previous</a>
+<span th:text="${blogs.number + 1}"></span> | <span th:text="${blogs.totalPages}"></span>
+<a class="btn btn-primary" th:if="${blogs.hasNext()}"
+   th:href="@{/blogs/page(page=${blogs.number + 1})}">Next</a>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
